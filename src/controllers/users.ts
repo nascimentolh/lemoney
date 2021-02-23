@@ -1,5 +1,6 @@
-import { Controller, Get, Post } from '@overnightjs/core';
+import { Controller, Get, Middleware, Post } from '@overnightjs/core';
 import logger from '@src/logger';
+import { authMiddleware } from '@src/middlewares/auth';
 import { User } from '@src/models/user';
 import AuthService from '@src/services/auth';
 import { Request, Response } from 'express';
@@ -53,5 +54,11 @@ export class UsersController extends BaseController {
     const token = AuthService.generateToken(user.toJSON());
 
     return res.send({ ...user.toJSON(), ...{ token } });
+  }
+
+  @Get('validate')
+  @Middleware(authMiddleware)
+  public validate(_: Request, res: Response): void {
+    res.status(200).send(true);
   }
 }
