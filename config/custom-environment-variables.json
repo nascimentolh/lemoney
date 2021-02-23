@@ -1,0 +1,13 @@
+{
+    "App": {
+      "port": "APP_URL",
+      "database": {
+        "mongoUrl": "MONGO_URL"
+      },
+      "auth": {
+        "key": "JWT_SECRET_KEY",
+        "tokenExpiresIn": "1d"
+      }
+    }
+  }
+  
