@@ -4,6 +4,7 @@ import bodyParser from 'body-parser';
 import { Application } from 'express';
 import helmet from 'helmet';
 import cors from 'cors';
+import expressPino from 'express-pino-logger';
 import './util/module-alias';
 import * as database from './database';
 import { UsersController } from './controllers/users';
@@ -23,6 +24,7 @@ export class SetupServer extends Server {
   private setupExpress(): void {
     this.app.use(helmet());
     this.app.use(bodyParser.json());
+    this.app.use(expressPino({ logger }));
     this.app.use(cors({ origin: '*' }));
   }
 

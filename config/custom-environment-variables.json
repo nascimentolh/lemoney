@@ -8,6 +8,7 @@
         "key": "JWT_SECRET_KEY",
         "tokenExpiresIn": "1d"
       }
+      
     }
   }
   

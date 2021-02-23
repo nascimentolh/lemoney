@@ -55,7 +55,8 @@ describe('Offer Results Functional Test', () => {
       expect(response.status).toBe(422);
       expect(response.body).toEqual({
         code: 422,
-        error:
+        error: "Unprocessable Entity",
+        message:
           'Offer validation failed: description: the maximum length is 500.',
       });
     });
@@ -75,7 +76,8 @@ describe('Offer Results Functional Test', () => {
       expect(response.status).toBe(422);
       expect(response.body).toEqual({
         code: 422,
-        error:
+        error: "Unprocessable Entity",
+        message:
           'Offer validation failed: url: this is not a valid URI.',
       });
     });

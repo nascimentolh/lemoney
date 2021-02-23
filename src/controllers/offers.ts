@@ -21,7 +21,10 @@ export class OffersController extends BaseController {
       res.status(200).send(offers);
     } catch (error) {
       logger.error(error);
-      res.status(500).send({ error: 'Something went wrong' });
+      this.sendErrorResponse(res, {
+        code: 500,
+        message: 'Something went wrong',
+      });
     }
   }
 
@@ -39,6 +42,7 @@ export class OffersController extends BaseController {
   }
 
   @Put(':id')
+  @Middleware(authMiddleware)
   public async update(req: Request, res: Response): Promise<void> {
     try {
       const offer = await Offer.findByIdAndUpdate(req.params.id, req.body);
@@ -51,13 +55,17 @@ export class OffersController extends BaseController {
   }
 
   @Delete(':id')
+  @Middleware(authMiddleware)
   public async delete(req: Request, res: Response): Promise<void> {
     try {
       await Offer.findByIdAndDelete(req.params.id);
       res.status(200).send({});
     } catch (error) {
       logger.error(error);
-      res.status(500).send({ code: 500, error: 'Something went wrong' });
+      this.sendErrorResponse(res, {
+        code: 500,
+        message: 'Something went wrong',
+      });
     }
   }
 }
