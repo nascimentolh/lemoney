@@ -6,6 +6,7 @@ import {
   Post,
   Put,
 } from '@overnightjs/core';
+import logger from '@src/logger';
 import { authMiddleware } from '@src/middlewares/auth';
 import { Offer } from '@src/models/offer';
 import { Request, Response } from 'express';
@@ -19,6 +20,7 @@ export class OffersController extends BaseController {
       const offers = await Offer.find({}).sort({ premium: -1 });
       res.status(200).send(offers);
     } catch (error) {
+      logger.error(error);
       res.status(500).send({ error: 'Something went wrong' });
     }
   }
@@ -31,6 +33,7 @@ export class OffersController extends BaseController {
       const result = await offer.save();
       res.status(201).send(result);
     } catch (error) {
+      logger.error(error);
       this.sendCreatedUpdatedErrorResponse(res, error);
     }
   }
@@ -42,6 +45,7 @@ export class OffersController extends BaseController {
       const updated = offer?.save();
       res.status(201).send(updated);
     } catch (error) {
+      logger.error(error);
       this.sendCreatedUpdatedErrorResponse(res, error);
     }
   }
@@ -52,6 +56,7 @@ export class OffersController extends BaseController {
       await Offer.findByIdAndDelete(req.params.id);
       res.status(200).send({});
     } catch (error) {
+      logger.error(error);
       res.status(500).send({ code: 500, error: 'Something went wrong' });
     }
   }

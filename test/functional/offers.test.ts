@@ -34,7 +34,7 @@ describe('Offer Results Functional Test', () => {
       expect(response.body).toEqual(
         expect.objectContaining({
           ...createOffer,
-          ...{ premium: false, active: false },
+          ...{ premium: false, active: true },
         })
       );
     });

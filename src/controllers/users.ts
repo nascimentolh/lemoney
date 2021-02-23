@@ -1,4 +1,5 @@
 import { Controller, Get, Post } from '@overnightjs/core';
+import logger from '@src/logger';
 import { User } from '@src/models/user';
 import AuthService from '@src/services/auth';
 import { Request, Response } from 'express';
@@ -12,6 +13,7 @@ export class UsersController extends BaseController {
       const users = await User.find({});
       res.status(200).send(users);
     } catch (error) {
+      logger.error(error);
       res.status(500).send({ error: 'Something went wrong' });
     }
   }
@@ -23,6 +25,7 @@ export class UsersController extends BaseController {
       const newUser = await user.save();
       res.status(201).send(newUser);
     } catch (error) {
+      logger.error(error);
       this.sendCreatedUpdatedErrorResponse(res, error);
     }
   }
