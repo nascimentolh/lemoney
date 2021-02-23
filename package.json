@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "babel src --extensions \".js,.ts\" --out-dir dist --copy-files && cp -r ./config ./dist",
-    "start": "npm run build && node dist/src/index.js",
+    "start": "npm run build && node dist/index.js",
     "start:local": "ts-node-dev --transpile-only 'src/index.ts'",
     "test": "npm run test:unit && npm run test:functional",
     "lint": "eslint ./src ./test --ext .ts",
@@ -59,6 +59,7 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "express-pino-logger": "^6.0.0",
+    "express-rate-limit": "^5.2.6",
     "helmet": "^4.4.1",
     "http-status-codes": "^2.1.4",
     "jsonwebtoken": "^8.5.1",
