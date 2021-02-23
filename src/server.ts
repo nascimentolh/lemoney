@@ -5,6 +5,7 @@ import helmet from 'helmet';
 import { OfferController } from './controllers/offer';
 import './util/module-alias';
 import * as database from './database';
+import { UsersController } from './controllers/users';
 
 export class SetupServer extends Server {
   constructor(private port = 3000) {
@@ -24,7 +25,8 @@ export class SetupServer extends Server {
 
   private setupControllers(): void {
     const offerController = new OfferController();
-    this.addControllers([offerController]);
+    const usersController = new UsersController();
+    this.addControllers([offerController, usersController]);
   }
 
   private async databaseSetup(): Promise<void> {
@@ -33,6 +35,12 @@ export class SetupServer extends Server {
 
   public async close(): Promise<void> {
     await database.close();
+  }
+
+  public start(): void {
+    this.app.listen(this.port, () => {
+      console.info('Server on port:', this.port);
+    });
   }
 
   public getApp(): Application {
