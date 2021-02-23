@@ -1,12 +1,12 @@
-import { ClassMiddleware, Controller, Get, Post } from '@overnightjs/core';
+import { Controller, Get, Middleware, Post } from '@overnightjs/core';
 import { authMiddleware } from '@src/middlewares/auth';
 import { Offer } from '@src/models/offer';
 import { Request, Response } from 'express';
 import { BaseController } from '.';
 
 @Controller('offers')
-@ClassMiddleware(authMiddleware)
 export class OffersController extends BaseController {
+
   @Get()
   public async getOffers(_: Request, res: Response): Promise<void> {
     try {
@@ -18,6 +18,7 @@ export class OffersController extends BaseController {
   }
 
   @Post()
+  @Middleware(authMiddleware)
   public async create(req: Request, res: Response): Promise<void> {
     try {
       const offer = new Offer(req.body);

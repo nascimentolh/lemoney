@@ -1,4 +1,22 @@
+import { Offer } from "@src/models/offer";
+import { User } from "@src/models/user";
+import AuthService from "@src/services/auth";
+
 describe('Offer Results Functional Test', () => {
+  const defaultUser = {
+    name: 'John Doe',
+    email: 'john2@mail.com',
+    password: '1234',
+  };
+
+  let token: string;
+  beforeEach(async () => {
+    await Offer.deleteMany({});
+    await User.deleteMany({});
+    const user = await new User(defaultUser).save();
+    token = AuthService.generateToken(user.toJSON());
+  });
+
   describe('When creating a new offer', () => {
     it('should succesfully create a new offer', async () => {
       const createOffer = {
@@ -10,6 +28,7 @@ describe('Offer Results Functional Test', () => {
 
       const response = await global.testRequest
         .post('/offers')
+        .set({ 'x-access-token': token })
         .send(createOffer);
       expect(response.status).toBe(201);
       expect(response.body).toEqual(
@@ -31,6 +50,7 @@ describe('Offer Results Functional Test', () => {
 
       const response = await global.testRequest
         .post('/offers')
+        .set({ 'x-access-token': token })
         .send(createOffer);
       expect(response.status).toBe(422);
       expect(response.body).toEqual({
@@ -50,6 +70,7 @@ describe('Offer Results Functional Test', () => {
 
       const response = await global.testRequest
         .post('/offers')
+        .set({ 'x-access-token': token })
         .send(createOffer);
       expect(response.status).toBe(422);
       expect(response.body).toEqual({
