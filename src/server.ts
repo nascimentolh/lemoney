@@ -2,10 +2,10 @@ import { Server } from '@overnightjs/core';
 import bodyParser from 'body-parser';
 import { Application } from 'express';
 import helmet from 'helmet';
-import { OfferController } from './controllers/offer';
 import './util/module-alias';
 import * as database from './database';
 import { UsersController } from './controllers/users';
+import { OffersController } from './controllers/offers';
 
 export class SetupServer extends Server {
   constructor(private port = 3000) {
@@ -24,9 +24,9 @@ export class SetupServer extends Server {
   }
 
   private setupControllers(): void {
-    const offerController = new OfferController();
+    const offersController = new OffersController();
     const usersController = new UsersController();
-    this.addControllers([offerController, usersController]);
+    this.addControllers([offersController, usersController]);
   }
 
   private async databaseSetup(): Promise<void> {
