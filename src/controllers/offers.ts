@@ -1,9 +1,11 @@
-import { Controller, Get, Post } from '@overnightjs/core';
+import { ClassMiddleware, Controller, Get, Post } from '@overnightjs/core';
+import { authMiddleware } from '@src/middlewares/auth';
 import { Offer } from '@src/models/offer';
 import { Request, Response } from 'express';
 import { BaseController } from '.';
 
 @Controller('offers')
+@ClassMiddleware(authMiddleware)
 export class OffersController extends BaseController {
   @Get()
   public async getOffers(_: Request, res: Response): Promise<void> {
