@@ -15,13 +15,13 @@ interface OfferModel extends Omit<Offer, '_id'>, Document {}
 
 const schema = new mongoose.Schema(
   {
-    advertiser_name: { type: String, required: true },
+    advertiser_name: { type: String, required: true, unique: [true, 'Advertiser must be unique'], },
     url: { type: String, required: true },
     description: { type: String, required: true },
     starts_at: { type: Date, required: true },
     ends_at: { type: Date, required: false },
     premium: { type: Boolean, required: false, default: false },
-    active: { type: Boolean, required: false, default: false },
+    active: { type: Boolean, required: false, default: true },
   },
   {
     toJSON: {

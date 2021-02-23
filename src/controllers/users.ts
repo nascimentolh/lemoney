@@ -1,4 +1,4 @@
-import { Controller, Post } from '@overnightjs/core';
+import { Controller, Get, Post } from '@overnightjs/core';
 import { User } from '@src/models/user';
 import AuthService from '@src/services/auth';
 import { Request, Response } from 'express';
@@ -6,6 +6,16 @@ import { BaseController } from '.';
 
 @Controller('users')
 export class UsersController extends BaseController {
+  @Get()
+  public async getUsers(_: Request, res: Response): Promise<void> {
+    try {
+      const users = await User.find({});
+      res.status(200).send(users);
+    } catch (error) {
+      res.status(500).send({ error: 'Something went wrong' });
+    }
+  }
+
   @Post()
   public async create(req: Request, res: Response): Promise<void> {
     try {
